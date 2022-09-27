@@ -234,37 +234,39 @@ namespace
 			library_manager::get()->get_all_items(items);
 			items.sort_by_format(m_obj, nullptr, 1);
 
-			metadb_v2::get()->queryMultiParallel_(items, [&](size_t idx, const metadb_v2::rec_t& rec)
+			auto api = metadb_v2::get();
+			api->queryMultiParallel_(items, [&](size_t idx, const metadb_v2::rec_t& rec)
 				{
 					pfc::string8 tf;
-					metadb_v2::get()->formatTitle_v2(items[idx], rec, nullptr, tf, m_obj, nullptr);
+					api->formatTitle_v2(items[idx], rec, nullptr, tf, m_obj, nullptr);
 					g_map.insert({ tf.get_ptr(), items[idx] });
 				});
 		}
 
 		void fix(size_t playlistIndex, bool fix)
 		{
-			auto api = playlist_manager::get();
+			auto plman = playlist_manager::get();
 
-			const size_t count = api->playlist_get_item_count(playlistIndex);
+			const size_t count = plman->playlist_get_item_count(playlistIndex);
 			if (count == 0) return;
 			
 			pfc::string8 playlistName;
-			api->playlist_get_name(playlistIndex, playlistName);
+			plman->playlist_get_name(playlistIndex, playlistName);
 
-			if (api->playlist_lock_get_filter_mask(playlistIndex) & playlist_lock::filter_replace)
+			if (plman->playlist_lock_get_filter_mask(playlistIndex) & playlist_lock::filter_replace)
 			{
 				FB2K_console_formatter() << component_name << ": A playlist lock prevents replacing items on playlist named \"" << playlistName << "\"";
 				return;
 			}
 
 			metadb_handle_list items;
-			api->playlist_get_all_items(playlistIndex, items);
+			plman->playlist_get_all_items(playlistIndex, items);
 			concurrency::concurrent_vector<pfc::string8> tfs(count);
 			
-			metadb_v2::get()->queryMultiParallel_(items, [&](size_t idx, const metadb_v2::rec_t& rec)
+			auto api = metadb_v2::get();
+			api->queryMultiParallel_(items, [&](size_t idx, const metadb_v2::rec_t& rec)
 				{
-					metadb_v2::get()->formatTitle_v2(items[idx], rec, nullptr, tfs[idx], m_obj, nullptr);
+					api->formatTitle_v2(items[idx], rec, nullptr, tfs[idx], m_obj, nullptr);
 				});
 
 			for (size_t i{}; i < count; ++i)
@@ -283,7 +285,7 @@ namespace
 						item.newPath = it->second->get_path();
 						if (fix)
 						{
-							api->playlist_replace_item(playlistIndex, i, it->second);
+							plman->playlist_replace_item(playlistIndex, i, it->second);
 						}
 					}
 					else
