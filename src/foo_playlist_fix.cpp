@@ -26,10 +26,10 @@ namespace
 	VALIDATE_COMPONENT_FILENAME("foo_playlist_fix.dll");
 
 	static constexpr GUID g_guid_main_menu_group = { 0x134518f8, 0xd897, 0x46fb, { 0xb2, 0xe3, 0x82, 0x7a, 0x45, 0xae, 0x7a, 0xd4 } };
-	static constexpr GUID g_guid_main_menu_revive_active = { 0xb229e300, 0x73f9, 0x4429, { 0x9f, 0x7c, 0xff, 0x61, 0x17, 0x15, 0xf1, 0x56 } };
-	static constexpr GUID g_guid_main_menu_revive_all = { 0xb0e848ff, 0x877e, 0x4f7c, { 0xbd, 0x21, 0x8c, 0xb3, 0x15, 0xd9, 0xf1, 0x80 } };
-	static constexpr GUID g_guid_main_menu_revive_active_check = { 0xcc0e6885, 0xa2dc, 0x4390, { 0xa9, 0x93, 0x4a, 0x7a, 0xf4, 0x9d, 0xda, 0x63 } };
-	static constexpr GUID g_guid_main_menu_revive_all_check = { 0x120edd18, 0x871b, 0x493c, { 0xb8, 0xb1, 0xf6, 0x7e, 0xe, 0xb3, 0x7d, 0x90 } };
+	static constexpr GUID g_guid_main_menu_fix_active = { 0xb229e300, 0x73f9, 0x4429, { 0x9f, 0x7c, 0xff, 0x61, 0x17, 0x15, 0xf1, 0x56 } };
+	static constexpr GUID g_guid_main_menu_fix_all = { 0xb0e848ff, 0x877e, 0x4f7c, { 0xbd, 0x21, 0x8c, 0xb3, 0x15, 0xd9, 0xf1, 0x80 } };
+	static constexpr GUID g_guid_main_menu_check_active = { 0xcc0e6885, 0xa2dc, 0x4390, { 0xa9, 0x93, 0x4a, 0x7a, 0xf4, 0x9d, 0xda, 0x63 } };
+	static constexpr GUID g_guid_main_menu_check_all = { 0x120edd18, 0x871b, 0x493c, { 0xb8, 0xb1, 0xf6, 0x7e, 0xe, 0xb3, 0x7d, 0x90 } };
 	static constexpr GUID g_guid_config_branch = { 0xa546dafe, 0x513c, 0x435b, { 0xbe, 0x4, 0xf2, 0x5b, 0x1d, 0x52, 0x6a, 0x23 } };
 	static constexpr GUID g_guid_config_item = { 0x8d2f71e1, 0x73ce, 0x435d, { 0xac, 0x99, 0x1a, 0xe0, 0xa6, 0x25, 0x0, 0xe4 } };
 
@@ -54,10 +54,10 @@ namespace
 
 	const std::vector<MenuItem> g_menu_items =
 	{
-		{ &g_guid_main_menu_revive_active, "Fix active playlist", "Fix active playlist." },
-		{ &g_guid_main_menu_revive_all, "Fix all playlists", "Fixes all playlists." },
-		{ &g_guid_main_menu_revive_active_check, "Check active playlist", "Generates a report but does not make any changes." },
-		{ &g_guid_main_menu_revive_all_check, "Check all playlists", "Generates a report but does not make any changes." },
+		{ &g_guid_main_menu_fix_active, "Fix active playlist", "Fix active playlist." },
+		{ &g_guid_main_menu_fix_all, "Fix all playlists", "Fixes all playlists." },
+		{ &g_guid_main_menu_check_active, "Check active playlist", "Generates a report but does not make any changes." },
+		{ &g_guid_main_menu_check_all, "Check all playlists", "Generates a report but does not make any changes." },
 	};
 
 	class CDialogReport : public CDialogImpl<CDialogReport>
@@ -76,7 +76,7 @@ namespace
 		{
 			if (m_preview)
 			{
-				pfc::setWindowText(m_hWnd, "Playlist Fix (Preview, no changes were made)");
+				SetWindowTextW(L"Playlist Fix (Preview, no changes were made)");
 			}
 
 			m_list_report.CreateInDialog(*this, IDC_LIST_REPORT);
@@ -122,11 +122,9 @@ namespace
 	public:
 		GUID get_command(uint32_t index) override
 		{
-			if (index < g_menu_items.size())
-			{
-				return *g_menu_items[index].guid;
-			}
-			uBugCheck();
+			if (index >= g_menu_items.size()) uBugCheck();
+			
+			return *g_menu_items[index].guid;
 		}
 
 		GUID get_parent() override
@@ -136,15 +134,16 @@ namespace
 
 		bool get_description(uint32_t index, pfc::string_base& out) override
 		{
-			if (index < g_menu_items.size())
-			{
-				out = g_menu_items[index].desc;
-			}
+			if (index >= g_menu_items.size()) uBugCheck();
+			
+			out = g_menu_items[index].desc;
 			return true;
 		}
 
 		bool get_display(uint32_t index, pfc::string_base& out, uint32_t& flags) override
 		{
+			if (index >= g_menu_items.size()) uBugCheck();
+
 			auto api = playlist_manager::get();
 			if ((index == 0 || index == 2) && api->get_active_playlist() == SIZE_MAX) flags = mainmenu_commands::flag_disabled;
 			if ((index == 1 || index == 3) && api->get_playlist_count() == 0) flags = mainmenu_commands::flag_disabled;
@@ -159,6 +158,9 @@ namespace
 
 		void execute(uint32_t index, service_ptr_t<service_base> callback) override
 		{
+			if (index >= g_menu_items.size()) uBugCheck();
+
+			const bool preview = index > 1;
 			auto api = playlist_manager::get();
 			g_report_items.clear();
 
@@ -168,7 +170,7 @@ namespace
 				if (playlistIndex == SIZE_MAX) return;
 
 				build_map();
-				fix(playlistIndex, index == 0);
+				fix(playlistIndex, preview);
 			}
 			else if (index == 1 || index == 3)
 			{
@@ -178,12 +180,8 @@ namespace
 				build_map();
 				for (size_t i = 0; i < count; ++i)
 				{
-					fix(i, index == 1);
+					fix(i, preview);
 				}
-			}
-			else
-			{
-				uBugCheck();
 			}
 
 			if (g_report_items.empty())
@@ -192,7 +190,7 @@ namespace
 			}
 			else
 			{
-				CDialogReport dlg(index == 2 || index == 3);
+				CDialogReport dlg(preview);
 				dlg.DoModal(core_api::get_main_window());
 				g_report_items.clear();
 			}
@@ -202,14 +200,9 @@ namespace
 
 		void get_name(uint32_t index, pfc::string_base& out) override
 		{
-			if (index < g_menu_items.size())
-			{
-				out = g_menu_items[index].name;
-			}
-			else
-			{
-				uBugCheck();
-			}
+			if (index >= g_menu_items.size()) uBugCheck();
+			
+			out = g_menu_items[index].name;
 		}
 
 	private:
@@ -243,7 +236,7 @@ namespace
 				});
 		}
 
-		void fix(size_t playlistIndex, bool fix)
+		void fix(size_t playlistIndex, bool preview)
 		{
 			auto plman = playlist_manager::get();
 
@@ -283,7 +276,7 @@ namespace
 					if (it != g_map.end())
 					{
 						item.newPath = it->second->get_path();
-						if (fix)
+						if (!preview)
 						{
 							plman->playlist_replace_item(playlistIndex, i, it->second);
 						}
