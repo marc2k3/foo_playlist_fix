@@ -53,12 +53,13 @@ public:
 			return nullptr;
 		}
 
-		if (column == 1) return &PFC_SINGLETON(CListCell_MultiText);
 		return &PFC_SINGLETON(CListCell_Text);
 	}
 
 	int OnCreate(LPCREATESTRUCT)
 	{
+		InitializeHeaderCtrl(HDS_NOSIZING);
+
 		AddColumn("Name", MulDiv(150, m_dpi.cx, 96));
 		AddColumnAutoWidth("Pattern");
 
