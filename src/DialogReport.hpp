@@ -28,7 +28,9 @@ public:
 		}
 
 		m_list_report.CreateInDialog(*this, IDC_LIST_REPORT);
+		m_list_report.SetWindowLongPtrW(GWL_EXSTYLE, 0L);
 		m_list_report.SetSelectionModeNone();
+
 		const SIZE DPI = m_list_report.GetDPI();
 		m_list_report.AddColumn("Playlist Name", MulDiv(200, DPI.cx, 96));
 		m_list_report.AddColumn("Item Index", MulDiv(80, DPI.cx, 96));
@@ -46,8 +48,6 @@ public:
 			m_list_report.SetItemText(i, 2, item.deadPath);
 			m_list_report.SetItemText(i, 3, item.newPath);
 		}
-
-		::SetWindowLongPtrW(m_list_report, GWL_EXSTYLE, 0);
 
 		m_hooks.AddDialogWithControls(*this);
 		CenterWindow();
