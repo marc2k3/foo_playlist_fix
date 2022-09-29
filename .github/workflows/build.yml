@@ -21,8 +21,8 @@ jobs:
     - name: Set up vcpkg
       run: |
         vcpkg integrate install
-        vcpkg install wtl --triplet x86-windows
-        vcpkg install wtl --triplet x64-windows
+        vcpkg install nlohmann-json wtl --triplet x86-windows
+        vcpkg install nlohmann-json wtl --triplet x64-windows
 
     - name: Create component folder
       run: |
