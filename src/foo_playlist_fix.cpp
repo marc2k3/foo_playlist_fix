@@ -4,7 +4,7 @@ namespace
 {
 	DECLARE_COMPONENT_VERSION(
 		component_name,
-		"1.0.1",
+		"1.1.0",
 		"Copyright (C) 2022 marc2003\n\n"
 		"Build: " __TIME__ ", " __DATE__
 	);
