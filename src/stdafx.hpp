@@ -12,6 +12,8 @@ using json = nlohmann::json;
 
 #include <helpers/foobar2000+atl.h>
 #include <helpers/atl-misc.h>
+#include <helpers/window_placement_helper.h>
+#include <libPPUI/CDialogResizeHelper.h>
 #include <libPPUI/CListControlComplete.h>
 #include <libPPUI/CListControl-Cells.h>
 #include <libPPUI/CListControlSimple.h>

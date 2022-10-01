@@ -8,20 +8,32 @@ struct ReportItem
 
 static std::vector<ReportItem> g_report_items;
 
-class CDialogReport : public CDialogImpl<CDialogReport>
+static const CDialogResizeHelper::Param resize_data[] =
+{
+	{ IDC_LIST_REPORT, 0, 0, 1, 1 },
+	{ IDCANCEL, 1, 1, 1, 1 },
+};
+
+static const CRect resize_min_max(760, 440, 0, 0);
+
+class CDialogReport : public CDialogImpl<CDialogReport>, public cfg_window_placement_v2
 {
 public:
-	CDialogReport(bool preview) : m_preview(preview) {}
+	CDialogReport(bool preview) : m_preview(preview), m_resizer(resize_data, resize_min_max), cfg_window_placement_v2(g_guid_window_placement) {}
 
 	BEGIN_MSG_MAP_EX(CDialogReport)
+		CHAIN_MSG_MAP_MEMBER(m_resizer)
 		MSG_WM_INITDIALOG(OnInitDialog)
 		COMMAND_ID_HANDLER_EX(IDCANCEL, OnCancel)
-		END_MSG_MAP()
+	END_MSG_MAP()
 
 	enum { IDD = IDD_DIALOG_REPORT };
 
 	BOOL OnInitDialog(CWindow, LPARAM)
 	{
+		SetIcon(ui_control::get()->get_main_icon());
+		apply_to_window(*this, false);
+
 		if (m_preview)
 		{
 			SetWindowTextW(L"Playlist Fix (Preview, no changes were made)");
@@ -50,16 +62,17 @@ public:
 		}
 
 		m_hooks.AddDialogWithControls(*this);
-		CenterWindow();
 		return TRUE;
 	}
 
 	void OnCancel(UINT, int nID, CWindow)
 	{
+		read_from_window(*this);
 		EndDialog(nID);
 	}
 
 private:
+	CDialogResizeHelper m_resizer;
 	CListControlSimple m_list_report;
 	bool m_preview{};
 	fb2k::CCoreDarkModeHooks m_hooks;
