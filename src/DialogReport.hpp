@@ -32,7 +32,6 @@ public:
 	BOOL OnInitDialog(CWindow, LPARAM)
 	{
 		SetIcon(ui_control::get()->get_main_icon());
-		apply_to_window(*this, false);
 
 		if (m_preview)
 		{
@@ -62,6 +61,7 @@ public:
 		}
 
 		m_hooks.AddDialogWithControls(*this);
+		apply_to_window(*this, false);
 		return TRUE;
 	}
 
