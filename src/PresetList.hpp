@@ -1,9 +1,9 @@
 #pragma once
 
-class PreferencesList : public CListControlComplete
+class PresetList : public CListControlComplete
 {
 public:
-	BEGIN_MSG_MAP_EX(PreferencesList)
+	BEGIN_MSG_MAP_EX(PresetList)
 		CHAIN_MSG_MAP(CListControlComplete);
 		MSG_WM_CREATE(OnCreate)
 		MSG_WM_CONTEXTMENU(OnContextMenu)
@@ -165,11 +165,10 @@ public:
 	void init_default()
 	{
 		m_items.clear();
-		m_items.emplace_back(ListItem("Default", component_default_pattern));
+		m_items.emplace_back(ListItem("Default", Component::default_pattern));
 		set_patterns(m_items);
 		ReloadData();
 	}
 
-	CButton m_btn_clear, m_btn_export;
 	ListItems m_items;
 };

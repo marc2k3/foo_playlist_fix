@@ -44,8 +44,7 @@ public:
 		if (nID == IDOK)
 		{
 			const int sel = m_combo_pattern.GetCurSel();
-			const std::string name = m_items[sel].name;
-			set_pattern_name(name);
+			set_pattern_name(m_items[sel].name);
 		}
 		EndDialog(nID);
 	}

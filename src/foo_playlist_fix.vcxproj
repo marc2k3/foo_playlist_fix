@@ -183,7 +183,7 @@
   <ItemGroup>
     <ClInclude Include="DialogPreset.hpp" />
     <ClInclude Include="DialogReport.hpp" />
-    <ClInclude Include="PreferencesList.hpp" />
+    <ClInclude Include="PresetList.hpp" />
     <ClInclude Include="foo_playlist_fix.hpp" />
     <ClInclude Include="resource.hpp" />
     <ClInclude Include="stdafx.hpp" />

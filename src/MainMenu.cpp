@@ -10,10 +10,10 @@ namespace
 
 	static const std::vector<MenuItem> menu_items =
 	{
-		{ &g_guid_main_menu_fix_active, "Fix active playlist", "Fix active playlist." },
-		{ &g_guid_main_menu_fix_all, "Fix all playlists", "Fixes all playlists." },
-		{ &g_guid_main_menu_check_active, "Check active playlist", "Generates a report but does not make any changes." },
-		{ &g_guid_main_menu_check_all, "Check all playlists", "Generates a report but does not make any changes." },
+		{ &guids::main_menu_fix_active, "Fix active playlist", "Fix active playlist." },
+		{ &guids::main_menu_fix_all, "Fix all playlists", "Fixes all playlists." },
+		{ &guids::main_menu_check_active, "Check active playlist", "Generates a report but does not make any changes." },
+		{ &guids::main_menu_check_all, "Check all playlists", "Generates a report but does not make any changes." },
 	};
 
 	class MainMenu : public mainmenu_commands
@@ -28,7 +28,7 @@ namespace
 
 		GUID get_parent() override
 		{
-			return g_guid_main_menu_group;
+			return guids::main_menu_group;
 		}
 
 		bool get_description(uint32_t index, pfc::string_base& out) override
@@ -85,7 +85,7 @@ namespace
 
 			if (g_report_items.empty())
 			{
-				popup_message::g_show("No dead items found.", component_name);
+				popup_message::g_show("No dead items found.", Component::name);
 			}
 			else
 			{
@@ -148,7 +148,7 @@ namespace
 
 			if (plman->playlist_lock_get_filter_mask(playlistIndex) & playlist_lock::filter_replace)
 			{
-				FB2K_console_formatter() << component_name << ": A playlist lock prevents replacing items on playlist named \"" << playlistName << "\"";
+				FB2K_console_formatter() << Component::name << ": A playlist lock prevents replacing items on playlist named \"" << playlistName << "\"";
 				return;
 			}
 
@@ -195,6 +195,6 @@ namespace
 		titleformat_object_ptr m_obj;
 	};
 
-	static mainmenu_group_popup_factory g_main_menu_group(g_guid_main_menu_group, mainmenu_groups::file, mainmenu_commands::sort_priority_base, component_name);
+	static mainmenu_group_popup_factory g_main_menu_group(guids::main_menu_group, mainmenu_groups::file, mainmenu_commands::sort_priority_base, Component::name);
 	FB2K_SERVICE_FACTORY(MainMenu);
 }

@@ -19,7 +19,7 @@ static const CRect resize_min_max(760, 440, 0, 0);
 class CDialogReport : public CDialogImpl<CDialogReport>, public cfg_window_placement_v2
 {
 public:
-	CDialogReport(bool preview) : m_preview(preview), m_resizer(resize_data, resize_min_max), cfg_window_placement_v2(g_guid_window_placement) {}
+	CDialogReport(bool preview) : m_preview(preview), m_resizer(resize_data, resize_min_max), cfg_window_placement_v2(guids::window_placement) {}
 
 	BEGIN_MSG_MAP_EX(CDialogReport)
 		CHAIN_MSG_MAP_MEMBER(m_resizer)

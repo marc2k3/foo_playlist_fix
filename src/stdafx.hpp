@@ -25,6 +25,6 @@ using json = nlohmann::json;
 #include "foo_playlist_fix.hpp"
 #include "DialogPreset.hpp"
 #include "DialogReport.hpp"
-#include "PreferencesList.hpp"
+#include "PresetList.hpp"
 
 #pragma comment(lib, "shlwapi.lib")

@@ -40,8 +40,7 @@ namespace
 
 	private:
 		CFont m_font;
-		ListItems m_data;
-		PreferencesList m_list;
+		PresetList m_list;
 		fb2k::CCoreDarkModeHooks m_hooks;
 		preferences_page_callback::ptr m_callback;
 	};
@@ -51,7 +50,7 @@ namespace
 	public:
 		GUID get_guid() override
 		{
-			return g_guid_preferences_page;
+			return guids::preferences_page;
 		}
 
 		GUID get_parent_guid() override
@@ -61,13 +60,13 @@ namespace
 
 		bool get_help_url(pfc::string_base& out) override
 		{
-			out = component_home_page;
+			out = Component::home_page;
 			return true;
 		}
 
 		const char* get_name() override
 		{
-			return component_name;
+			return Component::name;
 		}
 	};
 

@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-namespace
+namespace Component
 {
 	DECLARE_COMPONENT_VERSION(
-		component_name,
+		name,
 		"1.1.2",
 		"Copyright (C) 2022 marc2003\n\n"
 		"Build: " __TIME__ ", " __DATE__
@@ -36,7 +36,7 @@ ListItems get_patterns()
 
 	if (items.empty())
 	{
-		items.emplace_back(ListItem("Default", component_default_pattern));
+		items.emplace_back(ListItem("Default", Component::default_pattern));
 		set_patterns(items);
 	}
 	return items;
