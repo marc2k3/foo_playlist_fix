@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <vector>
 #include <concurrent_unordered_map.h>
-#include <concurrent_vector.h>
 
 #define JSON_USE_IMPLICIT_CONVERSIONS 0
 #include <nlohmann/json.hpp>

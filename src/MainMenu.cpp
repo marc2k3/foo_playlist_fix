@@ -154,7 +154,8 @@ namespace
 
 			metadb_handle_list items;
 			plman->playlist_get_all_items(playlistIndex, items);
-			concurrency::concurrent_vector<pfc::string8> tfs(count);
+			pfc::array_t<pfc::string8> tfs;
+			tfs.set_size(count);
 
 			auto api = metadb_v2::get();
 			api->queryMultiParallel_(items, [&](size_t idx, const metadb_v2::rec_t& rec)
