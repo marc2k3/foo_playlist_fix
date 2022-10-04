@@ -1,3 +1,6 @@
+### 1.1.3
+- The report dialog has been updated so both path columns are auto-sizing. Also, the paths are no longer prefixed with `file://`.
+
 ### 1.1.2
 - Fixes a bug where the report dialog list control had an ugly white border in `Dark Mode`.
 
