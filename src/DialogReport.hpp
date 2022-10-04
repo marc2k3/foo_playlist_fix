@@ -45,8 +45,9 @@ public:
 		const SIZE DPI = m_list_report.GetDPI();
 		m_list_report.AddColumn("Playlist Name", MulDiv(200, DPI.cx, 96));
 		m_list_report.AddColumn("Item Index", MulDiv(80, DPI.cx, 96));
-		m_list_report.AddColumn("Dead Path", MulDiv(300, DPI.cx, 96));
+		m_list_report.AddColumnAutoWidth("Dead Path");
 		m_list_report.AddColumnAutoWidth("New Path");
+		m_list_report.AddColumn("", 5);
 
 		const size_t count = g_report_items.size();
 		m_list_report.SetItemCount(count);

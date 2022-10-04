@@ -171,12 +171,12 @@ namespace
 					ReportItem item;
 					item.playlistName = playlistName;
 					item.playlistItemIndex = i + 1;
-					item.deadPath = path;
+					item.deadPath = path.subString(7);
 
 					const auto it = m_map.find(tfs[i].get_ptr());
 					if (it != m_map.end())
 					{
-						item.newPath = it->second->get_path();
+						item.newPath = pfc::string8(it->second->get_path()).subString(7);
 						if (!preview)
 						{
 							plman->playlist_replace_item(playlistIndex, i, it->second);
