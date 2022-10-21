@@ -66,7 +66,7 @@ namespace
 
 		const char* get_name() override
 		{
-			return Component::name;
+			return Component::name.data();
 		}
 	};
 

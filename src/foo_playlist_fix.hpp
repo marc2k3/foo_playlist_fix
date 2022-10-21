@@ -2,9 +2,9 @@
 
 namespace Component
 {
-	static constexpr const char* name = "Playlist Fix";
-	static constexpr const char* home_page = "https://marc2k3.github.io/component/playlist-fix/";
-	static constexpr const char* default_pattern = "%codec%|%album artist%|%album%|%date%|%discnumber%|%totaldiscs%|%tracknumber%|%artist%|%title%";
+	static constexpr wil::zstring_view name = "Playlist Fix";
+	static constexpr wil::zstring_view home_page = "https://marc2k3.github.io/component/playlist-fix/";
+	static constexpr wil::zstring_view default_pattern = "%codec%|%album artist%|%album%|%date%|%discnumber%|%totaldiscs%|%tracknumber%|%artist%|%title%";
 }
 
 namespace guids
@@ -28,4 +28,4 @@ using ListItems = std::vector<ListItem>;
 ListItems get_patterns();
 std::string get_pattern_name();
 void set_patterns(const ListItems& patterns);
-void set_pattern_name(const std::string& name);
+void set_pattern_name(wil::zstring_view name);

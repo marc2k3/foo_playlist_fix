@@ -165,7 +165,7 @@ public:
 	void init_default()
 	{
 		m_items.clear();
-		m_items.emplace_back(ListItem("Default", Component::default_pattern));
+		m_items.emplace_back(ListItem("Default", Component::default_pattern.data()));
 		set_patterns(m_items);
 		ReloadData();
 	}

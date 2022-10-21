@@ -2,6 +2,7 @@
 #define WINVER _WIN32_WINNT_WIN7
 
 #include <algorithm>
+#include <string>
 #include <vector>
 #include <concurrent_unordered_map.h>
 
@@ -19,6 +20,8 @@ using json = nlohmann::json;
 #include <libPPUI/Controls.h>
 #include <SDK/coreDarkMode.h>
 #include <pfc/string-conv-lite.h>
+
+#include <wil/stl.h>
 
 #include "resource.hpp"
 #include "foo_playlist_fix.hpp"

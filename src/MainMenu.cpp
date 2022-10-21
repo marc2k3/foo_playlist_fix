@@ -85,7 +85,7 @@ namespace
 
 			if (g_report_items.empty())
 			{
-				popup_message::g_show("No dead items found.", Component::name);
+				popup_message::g_show("No dead items found.", Component::name.data());
 			}
 			else
 			{
@@ -148,7 +148,7 @@ namespace
 
 			if (plman->playlist_lock_get_filter_mask(playlistIndex) & playlist_lock::filter_replace)
 			{
-				FB2K_console_formatter() << Component::name << ": A playlist lock prevents replacing items on playlist named \"" << playlistName << "\"";
+				FB2K_console_formatter() << Component::name.data() << ": A playlist lock prevents replacing items on playlist named \"" << playlistName << "\"";
 				return;
 			}
 
@@ -196,6 +196,6 @@ namespace
 		titleformat_object_ptr m_obj;
 	};
 
-	static mainmenu_group_popup_factory g_main_menu_group(guids::main_menu_group, mainmenu_groups::file, mainmenu_commands::sort_priority_base, Component::name);
+	static mainmenu_group_popup_factory g_main_menu_group(guids::main_menu_group, mainmenu_groups::file, mainmenu_commands::sort_priority_base, Component::name.data());
 	FB2K_SERVICE_FACTORY(MainMenu);
 }

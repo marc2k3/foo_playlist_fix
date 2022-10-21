@@ -36,7 +36,7 @@ ListItems get_patterns()
 
 	if (items.empty())
 	{
-		items.emplace_back(ListItem("Default", Component::default_pattern));
+		items.emplace_back(ListItem("Default", Component::default_pattern.data()));
 		set_patterns(items);
 	}
 	return items;
@@ -62,7 +62,7 @@ void set_patterns(const ListItems& patterns)
 	fb2k::configStore::get()->setConfigString("foo_playlist_fix.patterns", j.dump().c_str());
 }
 
-void set_pattern_name(const std::string& name)
+void set_pattern_name(wil::zstring_view name)
 {
-	fb2k::configStore::get()->setConfigString("foo_playlist_fix.pattern_name", name.c_str());
+	fb2k::configStore::get()->setConfigString("foo_playlist_fix.pattern_name", name.data());
 }
