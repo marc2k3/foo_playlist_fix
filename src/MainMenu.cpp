@@ -21,7 +21,7 @@ namespace
 	public:
 		GUID get_command(uint32_t index) override
 		{
-			if (index >= menu_items.size()) uBugCheck();
+			if (index >= menu_items.size()) FB2K_BugCheck();
 
 			return *menu_items[index].guid;
 		}
@@ -33,7 +33,7 @@ namespace
 
 		bool get_description(uint32_t index, pfc::string_base& out) override
 		{
-			if (index >= menu_items.size()) uBugCheck();
+			if (index >= menu_items.size()) FB2K_BugCheck();
 
 			out = menu_items[index].desc;
 			return true;
@@ -41,7 +41,7 @@ namespace
 
 		bool get_display(uint32_t index, pfc::string_base& out, uint32_t& flags) override
 		{
-			if (index >= menu_items.size()) uBugCheck();
+			if (index >= menu_items.size()) FB2K_BugCheck();
 
 			auto api = playlist_manager::get();
 			if ((index == 0 || index == 2) && api->get_active_playlist() == SIZE_MAX) flags = mainmenu_commands::flag_disabled;
@@ -57,7 +57,7 @@ namespace
 
 		void execute(uint32_t index, service_ptr_t<service_base> callback) override
 		{
-			if (index >= menu_items.size()) uBugCheck();
+			if (index >= menu_items.size()) FB2K_BugCheck();
 
 			const bool preview = index > 1;
 			auto api = playlist_manager::get();
@@ -99,7 +99,7 @@ namespace
 
 		void get_name(uint32_t index, pfc::string_base& out) override
 		{
-			if (index >= menu_items.size()) uBugCheck();
+			if (index >= menu_items.size()) FB2K_BugCheck();
 			out = menu_items[index].name;
 		}
 
