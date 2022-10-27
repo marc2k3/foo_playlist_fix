@@ -146,7 +146,7 @@ namespace
 			pfc::string8 playlistName;
 			plman->playlist_get_name(playlistIndex, playlistName);
 
-			if (plman->playlist_lock_get_filter_mask(playlistIndex) & playlist_lock::filter_replace)
+			if (WI_IsFlagSet(plman->playlist_lock_get_filter_mask(playlistIndex), playlist_lock::filter_replace))
 			{
 				FB2K_console_formatter() << Component::name.data() << ": A playlist lock prevents replacing items on playlist named \"" << playlistName << "\"";
 				return;
