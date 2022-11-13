@@ -1,3 +1,6 @@
+### 1.1.4
+- Compiled with latest `foobar2000` `SDK`.
+
 ### 1.1.3
 - The report dialog has been updated so both path columns are auto-sizing. Also, the paths are no longer prefixed with `file://`.
 
