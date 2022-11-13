@@ -1,0 +1,48 @@
+#include "resource.hpp"
+#include <winresrc.h>
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_PREFERENCES DIALOGEX 0, 0, 332, 288
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Shell Dlg 2", 400, 0, 0x0
+BEGIN
+    CONTROL         "Presets", IDC_HEADER, "foobar2000:separator", 0, 0, 0, 332, 12
+    CONTROL         "", IDC_LIST_PREFERENCES, "SysListView32", LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP, 4, 16, 324, 260
+END
+
+IDD_DIALOG_REPORT DIALOGEX 0, 0, 760, 440
+STYLE DS_SETFONT | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Playlist Fix"
+FONT 8, "Segoe UI", 400, 0, 0x0
+BEGIN
+    CONTROL         "", IDC_LIST_REPORT, "SysListView32", LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP, 0, 0, 760, 414
+    PUSHBUTTON      "Close", IDCANCEL, 703, 420, 50, 14
+END
+
+IDD_DIALOG_PRESET DIALOGEX 0, 0, 184, 87
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Playlist Fix"
+FONT 8, "Segoe UI", 400, 0, 0x0
+BEGIN
+    LTEXT           "Pattern", IDC_STATIC, 7, 7, 30, 8
+
+    COMBOBOX        IDC_COMBO_PATTERN, 45, 5, 132, 14, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_PATTERN, 7, 24, 170, 38, ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL | WS_DISABLED
+
+    DEFPUSHBUTTON   "OK", IDOK, 74, 67, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 128, 67, 50, 14
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
