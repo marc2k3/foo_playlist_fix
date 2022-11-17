@@ -9,22 +9,22 @@ public:
 		MSG_WM_CONTEXTMENU(OnContextMenu)
 	END_MSG_MAP()
 
-	bool AllowScrollbar(bool) const override
+	bool AllowScrollbar(bool) const final
 	{
 		return true;
 	}
 
-	bool CanSelectItem(size_t row) const override
+	bool CanSelectItem(size_t row) const final
 	{
 		return row < m_items.size();
 	}
 
-	bool GetCellTypeSupported() const override
+	bool GetCellTypeSupported() const final
 	{
 		return true;
 	}
 
-	bool GetSubItemText(size_t row, size_t column, pfc::string_base& out) const override
+	bool GetSubItemText(size_t row, size_t column, pfc::string_base& out) const final
 	{
 		if (row < m_items.size())
 		{
@@ -40,12 +40,12 @@ public:
 		return false;
 	}
 
-	bool TableEdit_IsColumnEditable(size_t) const override
+	bool TableEdit_IsColumnEditable(size_t) const final
 	{
 		return true;
 	}
 
-	cellType_t GetCellType(size_t row, size_t column) const override
+	cellType_t GetCellType(size_t row, size_t column) const final
 	{
 		if (row == m_items.size())
 		{
@@ -67,18 +67,18 @@ public:
 		return 0;
 	}
 
-	size_t GetItemCount() const override
+	size_t GetItemCount() const final
 	{
 		return m_items.size() + 1;
 	}
 
-	size_t GetSubItemSpan(size_t row, size_t column) const override
+	size_t GetSubItemSpan(size_t row, size_t column) const final
 	{
 		if (row == m_items.size() && column == 0) return 2;
 		return 1;
 	}
 
-	void ExecuteDefaultAction(size_t row) override
+	void ExecuteDefaultAction(size_t row) final
 	{
 		if (row == m_items.size()) add_new_item();
 	}
@@ -113,13 +113,13 @@ public:
 		}
 	}
 
-	void OnItemsRemoved(const pfc::bit_array& mask, size_t oldCount) override
+	void OnItemsRemoved(const pfc::bit_array& mask, size_t oldCount) final
 	{
 		__super::OnItemsRemoved(mask, oldCount);
 		set_patterns(m_items);
 	}
 
-	void OnSubItemClicked(size_t row, size_t column, CPoint) override
+	void OnSubItemClicked(size_t row, size_t column, CPoint) final
 	{
 		if (row < m_items.size())
 		{
@@ -131,7 +131,7 @@ public:
 		}
 	}
 
-	void RequestRemoveSelection() override
+	void RequestRemoveSelection() final
 	{
 		const pfc::bit_array_bittable mask = GetSelectionMask();
 		const size_t old_count = GetItemCount();
@@ -139,9 +139,9 @@ public:
 		this->OnItemsRemoved(mask, old_count);
 	}
 
-	void RequestReorder(size_t const*, size_t) override {}
+	void RequestReorder(size_t const*, size_t) final {}
 
-	void TableEdit_SetField(size_t row, size_t column, const char* value) override
+	void TableEdit_SetField(size_t row, size_t column, const char* value) final
 	{
 		if (column == 0) m_items[row].name = value;
 		else if (column == 1) m_items[row].pattern = value;

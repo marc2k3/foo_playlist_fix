@@ -26,14 +26,14 @@ namespace
 			return FALSE;
 		}
 
-		uint32_t get_state() override
+		uint32_t get_state() final
 		{
 			return preferences_state::resettable | preferences_state::dark_mode_supported;
 		}
 
-		void apply() override {}
+		void apply() final {}
 
-		void reset() override
+		void reset() final
 		{
 			m_list.init_default();
 		}
@@ -48,23 +48,23 @@ namespace
 	class PreferencesPageImpl : public preferences_page_impl<CDialogPreferences>
 	{
 	public:
-		GUID get_guid() override
+		GUID get_guid() final
 		{
 			return guids::preferences_page;
 		}
 
-		GUID get_parent_guid() override
+		GUID get_parent_guid() final
 		{
 			return preferences_page::guid_tools;
 		}
 
-		bool get_help_url(pfc::string_base& out) override
+		bool get_help_url(pfc::string_base& out) final
 		{
 			out = Component::home_page;
 			return true;
 		}
 
-		const char* get_name() override
+		const char* get_name() final
 		{
 			return Component::name.data();
 		}

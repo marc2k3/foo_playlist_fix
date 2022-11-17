@@ -19,19 +19,19 @@ namespace
 	class MainMenu : public mainmenu_commands
 	{
 	public:
-		GUID get_command(uint32_t index) override
+		GUID get_command(uint32_t index) final
 		{
 			if (index >= menu_items.size()) FB2K_BugCheck();
 
 			return *menu_items[index].guid;
 		}
 
-		GUID get_parent() override
+		GUID get_parent() final
 		{
 			return guids::main_menu_group;
 		}
 
-		bool get_description(uint32_t index, pfc::string_base& out) override
+		bool get_description(uint32_t index, pfc::string_base& out) final
 		{
 			if (index >= menu_items.size()) FB2K_BugCheck();
 
@@ -39,7 +39,7 @@ namespace
 			return true;
 		}
 
-		bool get_display(uint32_t index, pfc::string_base& out, uint32_t& flags) override
+		bool get_display(uint32_t index, pfc::string_base& out, uint32_t& flags) final
 		{
 			if (index >= menu_items.size()) FB2K_BugCheck();
 
@@ -50,12 +50,12 @@ namespace
 			return true;
 		}
 
-		uint32_t get_command_count() override
+		uint32_t get_command_count() final
 		{
 			return static_cast<uint32_t>(menu_items.size());
 		}
 
-		void execute(uint32_t index, service_ptr_t<service_base> callback) override
+		void execute(uint32_t index, service_ptr_t<service_base> callback) final
 		{
 			if (index >= menu_items.size()) FB2K_BugCheck();
 
@@ -97,7 +97,7 @@ namespace
 			m_map.clear();
 		}
 
-		void get_name(uint32_t index, pfc::string_base& out) override
+		void get_name(uint32_t index, pfc::string_base& out) final
 		{
 			if (index >= menu_items.size()) FB2K_BugCheck();
 			out = menu_items[index].name;
