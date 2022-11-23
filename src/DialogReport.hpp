@@ -66,7 +66,7 @@ public:
 		return TRUE;
 	}
 
-	void OnCancel(UINT, int nID, CWindow)
+	void OnCancel(uint32_t, int nID, CWindow)
 	{
 		read_from_window(*this);
 		EndDialog(nID);

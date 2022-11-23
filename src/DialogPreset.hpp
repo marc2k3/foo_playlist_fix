@@ -39,7 +39,7 @@ public:
 		return TRUE;
 	}
 
-	void OnCloseCmd(UINT, int nID, CWindow)
+	void OnCloseCmd(uint32_t, int nID, CWindow)
 	{
 		if (nID == IDOK)
 		{
@@ -49,7 +49,7 @@ public:
 		EndDialog(nID);
 	}
 
-	void OnPatternChange(UINT, int, CWindow)
+	void OnPatternChange(uint32_t, int, CWindow)
 	{
 		const int sel = m_combo_pattern.GetCurSel();
 		m_edit_text = m_items[sel].pattern;
