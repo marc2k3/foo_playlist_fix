@@ -60,6 +60,6 @@ jobs:
       if: startsWith(github.ref, 'refs/tags') && matrix.configuration == 'Release'
       uses: softprops/action-gh-release@v1
       with:
-        files: component\${{ matrix.project }}-${{ github.ref_name }}.fb2k-component
+        files: component/${{ matrix.project }}-${{ github.ref_name }}.fb2k-component
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
