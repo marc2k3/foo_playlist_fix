@@ -16,7 +16,7 @@ jobs:
         git clone --recursive ${{ github.server_url }}/${{ github.repository }}
 
     - name: Set up MSBuild
-      uses: microsoft/setup-msbuild@v1.2
+      uses: microsoft/setup-msbuild@v1.3
 
     - name: Set up vcpkg
       run: |
