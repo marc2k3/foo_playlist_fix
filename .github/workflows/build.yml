@@ -30,17 +30,19 @@ jobs:
         mkdir component\x64
 
     - name: Build x86
+      working-directory: ${{ matrix.project }}
       run: |
-        msbuild ${{ matrix.project }}\src\${{ matrix.project }}.sln -m -p:Platform=Win32 -p:Configuration=${{ matrix.configuration }}
-        copy ${{ matrix.project }}\src\Win32\${{ matrix.configuration }}\${{ matrix.project }}.dll component
-        copy ${{ matrix.project }}\src\Win32\${{ matrix.configuration }}\${{ matrix.project }}.pdb component
-        cd ${{ matrix.project }} && git clean -fdx && git submodule foreach --recursive git clean -fdx
+        msbuild src\${{ matrix.project }}.sln -m -p:Platform=Win32 -p:Configuration=${{ matrix.configuration }}
+        copy src\Win32\${{ matrix.configuration }}\${{ matrix.project }}.dll ..\component
+        copy src\Win32\${{ matrix.configuration }}\${{ matrix.project }}.pdb ..\component
+        git clean -fdx && git submodule foreach --recursive git clean -fdx
 
     - name: Build x64
+      working-directory: ${{ matrix.project }}
       run: |
-        msbuild ${{ matrix.project }}\src\${{ matrix.project }}.sln -m -p:Platform=x64 -p:Configuration=${{ matrix.configuration }}
-        copy ${{ matrix.project }}\src\x64\${{ matrix.configuration }}\${{ matrix.project }}.dll component\x64
-        copy ${{ matrix.project }}\src\x64\${{ matrix.configuration }}\${{ matrix.project }}.pdb component\x64
+        msbuild src\${{ matrix.project }}.sln -m -p:Platform=x64 -p:Configuration=${{ matrix.configuration }}
+        copy src\x64\${{ matrix.configuration }}\${{ matrix.project }}.dll ..\component\x64
+        copy src\x64\${{ matrix.configuration }}\${{ matrix.project }}.pdb ..\component\x64
 
     - name: Upload with pdb
       if: startsWith(github.ref, 'refs/tags') && matrix.configuration == 'Release'
@@ -51,10 +53,11 @@ jobs:
 
     - name: Delete pdb files and zip for release
       if: startsWith(github.ref, 'refs/tags') && matrix.configuration == 'Release'
+      working-directory: component
       run: |
-        del component\${{ matrix.project }}.pdb
-        del component\x64\${{ matrix.project }}.pdb
-        cd component && 7z a -tzip ${{ matrix.project }}-${{ github.ref_name }}.fb2k-component *
+        del ${{ matrix.project }}.pdb
+        del x64\${{ matrix.project }}.pdb
+        7z a -tzip ${{ matrix.project }}-${{ github.ref_name }}.fb2k-component *
 
     - name: Release
       if: startsWith(github.ref, 'refs/tags') && matrix.configuration == 'Release'
