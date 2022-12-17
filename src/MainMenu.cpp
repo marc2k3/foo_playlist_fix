@@ -43,9 +43,9 @@ namespace
 		{
 			if (index >= menu_items.size()) FB2K_BugCheck();
 
-			auto api = playlist_manager::get();
-			if ((index == 0 || index == 2) && api->get_active_playlist() == SIZE_MAX) flags = mainmenu_commands::flag_disabled;
-			if ((index == 1 || index == 3) && api->get_playlist_count() == 0) flags = mainmenu_commands::flag_disabled;
+			auto plman = playlist_manager::get();
+			if ((index == 0 || index == 2) && plman->get_active_playlist() == SIZE_MAX) flags = mainmenu_commands::flag_disabled;
+			if ((index == 1 || index == 3) && plman->get_playlist_count() == 0) flags = mainmenu_commands::flag_disabled;
 			get_name(index, out);
 			return true;
 		}
@@ -60,12 +60,12 @@ namespace
 			if (index >= menu_items.size()) FB2K_BugCheck();
 
 			const bool preview = index > 1;
-			auto api = playlist_manager::get();
+			auto plman = playlist_manager::get();
 			g_report_items.clear();
 
 			if (index == 0 || index == 2)
 			{
-				const size_t playlistIndex = api->get_active_playlist();
+				const size_t playlistIndex = plman->get_active_playlist();
 				if (playlistIndex == SIZE_MAX) return;
 
 				if (!build_map()) return;
@@ -73,7 +73,7 @@ namespace
 			}
 			else if (index == 1 || index == 3)
 			{
-				const size_t count = api->get_playlist_count();
+				const size_t count = plman->get_playlist_count();
 				if (count == 0) return;
 
 				if (!build_map()) return;
