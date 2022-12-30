@@ -1,5 +1,7 @@
 #pragma once
 
+extern cfg_window_placement_v2 g_window_placement;
+
 struct ReportItem
 {
 	size_t playlistItemIndex{};
@@ -16,10 +18,10 @@ static const CDialogResizeHelper::Param resize_data[] =
 
 static const CRect resize_min_max(760, 440, 0, 0);
 
-class CDialogReport : public CDialogImpl<CDialogReport>, public cfg_window_placement_v2
+class CDialogReport : public CDialogImpl<CDialogReport>
 {
 public:
-	CDialogReport(bool preview) : m_preview(preview), m_resizer(resize_data, resize_min_max), cfg_window_placement_v2(guids::window_placement) {}
+	CDialogReport(bool preview) : m_preview(preview), m_resizer(resize_data, resize_min_max) {}
 
 	BEGIN_MSG_MAP_EX(CDialogReport)
 		CHAIN_MSG_MAP_MEMBER(m_resizer)
@@ -62,13 +64,13 @@ public:
 		}
 
 		m_hooks.AddDialogWithControls(*this);
-		apply_to_window(*this, false);
+		g_window_placement.apply_to_window(*this, false);
 		return TRUE;
 	}
 
 	void OnCancel(uint32_t, int nID, CWindow)
 	{
-		read_from_window(*this);
+		g_window_placement.read_from_window(*this);
 		EndDialog(nID);
 	}
 

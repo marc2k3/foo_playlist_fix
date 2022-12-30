@@ -12,6 +12,8 @@ namespace Component
 	VALIDATE_COMPONENT_FILENAME("foo_playlist_fix.dll");
 }
 
+cfg_window_placement_v2 g_window_placement(guids::window_placement);
+
 ListItems get_patterns()
 {
 	ListItems items;
