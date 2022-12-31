@@ -181,6 +181,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Config.hpp" />
     <ClInclude Include="DialogPreset.hpp" />
     <ClInclude Include="DialogReport.hpp" />
     <ClInclude Include="PresetList.hpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="DialogPreferences.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="foo_playlist_fix.cpp" />

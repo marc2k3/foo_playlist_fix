@@ -25,6 +25,7 @@ using json = nlohmann::json;
 
 #include "resource.hpp"
 #include "foo_playlist_fix.hpp"
+#include "Config.hpp"
 #include "DialogPreset.hpp"
 #include "DialogReport.hpp"
 #include "PresetList.hpp"

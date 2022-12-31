@@ -2,14 +2,6 @@
 
 extern cfg_window_placement_v2 g_window_placement;
 
-struct ReportItem
-{
-	size_t playlistItemIndex{};
-	pfc::string8 playlistName, deadPath, newPath;
-};
-
-static std::vector<ReportItem> g_report_items;
-
 static const CDialogResizeHelper::Param resize_data[] =
 {
 	{ IDC_LIST_REPORT, 0, 0, 1, 1 },

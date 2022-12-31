@@ -17,15 +17,3 @@ namespace guids
 	static constexpr GUID preferences_page = { 0x921e2802, 0x3da9, 0x4f10, { 0xbb, 0x7d, 0x26, 0x66, 0x52, 0xd7, 0xf4, 0x55 } };
 	static constexpr GUID window_placement = { 0xf6cec1c9, 0xd109, 0x4569, { 0x84, 0xf5, 0xd0, 0xd, 0x2, 0x83, 0x58, 0xf6 } };
 }
-
-struct ListItem
-{
-	std::string name, pattern;
-};
-
-using ListItems = std::vector<ListItem>;
-
-ListItems get_patterns();
-std::string get_pattern_name();
-void set_patterns(const ListItems& patterns);
-void set_pattern_name(wil::zstring_view name);
